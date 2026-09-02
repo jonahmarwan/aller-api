@@ -27,5 +27,7 @@ func main() {
 		fmt.Println(s, v)
 		return false
 	})
+
+	fmt.Println(Config.API_PRIVATE_KEY, Config.API_PUBLIC_KEY)
 	// log.Fatal(http.ListenAndServe("localhost:8080", router.Self()))
 }

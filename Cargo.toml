@@ -9,6 +9,6 @@ path = "./crypt/sec.rs"
 crate-type = ["cdylib"]
 
 [dependencies]
-ed25519-dalek = { version = "2.2.0", features = ["rand_core"] }
-rand = "0.8"
- 
+ed25519-dalek = { version = "3.0.0", features = ["rand_core"] }
+rand = "0.10.2"
+rand_core = "0.10.1"
