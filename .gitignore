@@ -65,4 +65,5 @@ go.work.sum
 # .vscode/
 
 main
+start
 target/

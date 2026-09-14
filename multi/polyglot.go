@@ -17,6 +17,7 @@ func (p *Polyglot) ReadServices() {
 	_, err := os.Stat("../services/")
 	if err != nil {
 		if os.IsNotExist(err) {
+			fmt.Println("no exist")
 			return
 		}
 		fmt.Println(err)

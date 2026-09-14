@@ -6,7 +6,7 @@ edition = "2024"
 [lib]
 name = "sec"
 path = "./crypt/sec.rs"
-crate-type = ["cdylib"]
+crate-type = ["staticlib"]
 
 [dependencies]
 ed25519-dalek = { version = "3.0.0", features = ["rand_core"] }
