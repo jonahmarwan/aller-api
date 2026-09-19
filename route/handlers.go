@@ -12,7 +12,7 @@ func roothandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("hello from API"))
 }
 
-func usershandler(w http.ResponseWriter, r *http.Request) {
+func Usershandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("dfdsfd"))
@@ -21,5 +21,5 @@ func usershandler(w http.ResponseWriter, r *http.Request) {
 func Idiothandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("YOU ARE A RETARD"))
+	w.Write([]byte("fuck u"))
 }

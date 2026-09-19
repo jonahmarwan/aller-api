@@ -16,7 +16,6 @@ type Router struct {
 func (router *Router) InitRouter(config *api.ConfigStruct) {
 	router.tree = radix.New()
 	router.tree.Insert("/api", roothandler)
-	router.tree.Insert("/api/users", usershandler)
 	router.Config = config
 }
 
