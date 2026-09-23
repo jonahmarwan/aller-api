@@ -1,7 +1,6 @@
 package multi
 
 import (
-	"fmt"
 	"os"
 	"strings"
 
@@ -27,6 +26,8 @@ type Service struct {
 type Config struct {
 	Service Service `toml:"service"`
 }
+
+//Fix syntax in future
 
 func GenerateTOMLfromMeta(Meta []string, path string) error {
 	broken := []string{}
@@ -54,7 +55,6 @@ func GenerateTOMLfromMeta(Meta []string, path string) error {
 		}
 	}
 	file, err := os.Create(strings.Join(pathElem[:len(pathElem)-1], "\\") + "\\" + cfg.Service.Name + ".toml")
-	fmt.Println(strings.Join(pathElem[:len(pathElem)-1], "\\") + "\\" + cfg.Service.Name + ".toml")
 	if err != nil {
 		return err
 	}
