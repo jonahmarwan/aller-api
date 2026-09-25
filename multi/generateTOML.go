@@ -2,6 +2,8 @@ package multi
 
 import (
 	"os"
+	"path/filepath"
+	"runtime"
 	"strings"
 
 	"github.com/pelletier/go-toml/v2"
@@ -33,7 +35,12 @@ func GenerateTOMLfromMeta(Meta []string, path string) error {
 	broken := []string{}
 	var cfg Config
 	cfg.Service.path = path
-	pathElem := strings.Split(path, "\\")
+	var pathElem []string
+	if runtime.GOOS == "windows" {
+		pathElem = strings.Split(path, "\\")
+	} else {
+		pathElem = strings.Split(path, "/")
+	}
 	cfg.Service.Name = pathElem[len(pathElem)-2]
 	for _, line := range Meta {
 		broken = strings.Split(line, " ")
@@ -54,7 +61,7 @@ func GenerateTOMLfromMeta(Meta []string, path string) error {
 			continue
 		}
 	}
-	file, err := os.Create(strings.Join(pathElem[:len(pathElem)-1], "\\") + "\\" + cfg.Service.Name + ".toml")
+	file, err := os.Create(filepath.Join(append(pathElem[:len(pathElem)-1], cfg.Service.Name+".toml")...))
 	if err != nil {
 		return err
 	}
