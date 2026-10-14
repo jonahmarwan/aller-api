@@ -59,8 +59,8 @@ func GenerateTOMLfromMeta(Meta []string, path string) error {
 
 		default:
 			continue
-		}
-	}
+        }
+    }
 	file, err := os.Create(filepath.Join(append(pathElem[:len(pathElem)-1], cfg.Service.Name+".toml")...))
 	if err != nil {
 		return err

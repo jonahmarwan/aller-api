@@ -1,4 +1,4 @@
-module aller-api
+module github.com/jonahmarwan/aller-api
 
 go 1.27.0
 

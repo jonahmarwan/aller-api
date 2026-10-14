@@ -1,10 +1,10 @@
 package main
 
 import (
-	api "aller-api"
-	"aller-api/crypt"
-	"aller-api/multi"
-	"aller-api/route"
+	api "github.com/jonahmarwan/aller-api"
+	"github.com/jonahmarwan/aller-api/crypt"
+	"github.com/jonahmarwan/aller-api/multi"
+	"github.com/jonahmarwan/aller-api/route"
 	"fmt"
 	"log"
 	"net/http"

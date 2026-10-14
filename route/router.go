@@ -1,7 +1,7 @@
 package route
 
 import (
-	api "aller-api"
+	api "github.com/jonahmarwan/aller-api"
 	"errors"
 	"net/http"
 

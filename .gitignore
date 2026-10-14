@@ -67,3 +67,6 @@ go.work.sum
 main
 start
 target/
+multi/
+
+Cargo.lock

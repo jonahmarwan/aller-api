@@ -1,0 +1,7 @@
+[lib]
+name = "libpolyglot.Rust.exporter"
+path = "build.rs"
+
+[[bin]]
+name = "libpolyglot-Rust-exporter"
+crate-type = ["cdylib"]
