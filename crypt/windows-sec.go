@@ -3,7 +3,7 @@
 package crypt
 
 /*
-#cgo LDFLAGS: -L../lib/windows_amd64/ -lsec -lntdll -lws2_32 -luserenv
+#cgo LDFLAGS: -L${SRCDIR}/../lib/windows_amd64 -lsec -lntdll -lws2_32 -luserenv
 #include <stdlib.h>
 
 void gen_key(unsigned char* priv, unsigned char* pub);

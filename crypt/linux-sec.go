@@ -1,9 +1,9 @@
-//go:build linux || darwin
+//go:build linux
 
 package crypt
 
 /*
-#cgo LDFLAGS: -L../target/release -lsec
+#cgo LDFLAGS: -L${SRCDIR}/../lib/linux_amd64 -lsec
 #include <stdlib.h>
 
 void gen_key(unsigned char* priv, unsigned char* pub);
