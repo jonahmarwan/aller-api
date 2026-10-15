@@ -1,4 +1,4 @@
-package main
+package multi
 
 import (
 	"bufio"
