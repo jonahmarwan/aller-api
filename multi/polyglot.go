@@ -31,6 +31,9 @@ func (p *Polyglot) ReadServices() {
 	}
 }
 
-func (p *Polyglot) InitPolyglot() {
+
+func NewPolyglot() Polyglot {
+	var p Polyglot
 	p.PathTree = radix.New()
+	return p
 }

@@ -18,16 +18,14 @@ var Config = api.ConfigStruct{CORS: EnableCORS, API_PRIVATE_KEY: [32]byte{}, API
 
 func main() {
 	// Init router
-	var router route.Router
-	router.InitRouter(&Config)
+	router := route.NewRouter(&Config)
 	router.EnableCORS()
 
 	//Init API keys
 	Config.API_PRIVATE_KEY, Config.API_PUBLIC_KEY = crypt.GenerateKeys()
 
 	// Init polyglot
-	var polyglot multi.Polyglot
-	polyglot.InitPolyglot()
+	polyglot := multi.NewPolyglot()
 	polyglot.ReadServices()
 
 	// To be replaced by polyglot comprehension service
