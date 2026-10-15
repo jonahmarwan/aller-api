@@ -69,4 +69,4 @@ start
 target/
 multi/
 
-Cargo.lock
+start/crypt/libsec/Cargo.lock
