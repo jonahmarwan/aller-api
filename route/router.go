@@ -1,12 +1,17 @@
 package route
 
 import (
-	api "github.com/jonahmarwan/aller-api"
 	"errors"
 	"net/http"
 
+	api "github.com/jonahmarwan/aller-api"
+	"github.com/jonahmarwan/aller-api/crypt"
+
 	"github.com/armon/go-radix"
 )
+
+var PublicKey [32]byte 
+var PrivateKey [32]byte
 
 type Router struct {
 	tree   *radix.Tree
@@ -14,6 +19,14 @@ type Router struct {
 }
 
 func NewRouter(config *api.ConfigStruct) (Router, error) {
+	if config.AutoKeys == true {
+		pubKey, privKey, err := crypt.GenerateKeys()
+		if err != nil {
+			return Router{tree: radix.New(), Config: &api.ConfigStruct{CORS: true}}, errors.New("Failed to generate API keys")
+		}
+		config.ApiPrivateKey = privKey
+		config.ApiPublicKey = pubKey
+	}
 	var router Router
 	router.tree = radix.New()
 	router.Config = config

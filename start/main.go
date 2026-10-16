@@ -2,7 +2,6 @@ package main
 
 import (
 	api "github.com/jonahmarwan/aller-api"
-	"github.com/jonahmarwan/aller-api/crypt"
 	"github.com/jonahmarwan/aller-api/multi"
 	"github.com/jonahmarwan/aller-api/route"
 	"fmt"
@@ -14,26 +13,31 @@ import (
 )
 
 var EnableCORS = true
-var Config = api.ConfigStruct{CORS: EnableCORS, API_PRIVATE_KEY: [32]byte{}, API_PUBLIC_KEY: [32]byte{}}
 
 func main() {
+
+	// Configuration
+	Config := api.ConfigStruct{CORS: EnableCORS, AutoKeys: true}
+
+	/*
+		Alternatively:
+
+		privateKey, publicKey, err := crypt.GenerateKeys()
+		if err != nil {
+			//handle error
+		}
+		Config := api.ConfigStruct{CORS: EnableCORS, ApiPrivateKey: privateKey, ApiPublicKey: publicKey}
+
+	*/
+
 	// Init router
 	router, _ := route.NewRouter(&Config)
 	router.EnableCORS()
-
-	//Init API keys
-	privKey, pubKey, err := crypt.GenerateKeys()
-
-	if err != nil {
-		panic(err)
-	}
-
-
-	Config = api.ConfigStruct{CORS: EnableCORS, API_PRIVATE_KEY: privKey, API_PUBLIC_KEY: pubKey}
 	
+
 	// Init polyglot
 	polyglot := multi.NewPolyglot()
-	err = polyglot.ReadServices()
+	err := polyglot.ReadServices()
 
 	if err != nil {
 		panic(err)
@@ -63,6 +67,6 @@ func main() {
 	router.AddRoute("/api/idiot", route.Idiothandler)
 	router.AddRoute("/api/users", route.Usershandler)
 
-	fmt.Println(router.Config.API_PUBLIC_KEY)
+	fmt.Println(router.Config.ApiPublicKey)
 	log.Fatal(http.ListenAndServe("127.0.0.1:8080", router.Self()))
 }
