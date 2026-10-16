@@ -22,11 +22,16 @@ func NewRouter(config *api.ConfigStruct) (Router, error) {
 	if config.AutoKeys == true {
 		pubKey, privKey, err := crypt.GenerateKeys()
 		if err != nil {
-			return Router{tree: radix.New(), Config: &api.ConfigStruct{CORS: true}}, errors.New("Failed to generate API keys")
+			return Router{tree: radix.New(), Config: &api.ConfigStruct{CORS: true}}, errors.New("Failed to generate API keys.")
 		}
 		config.ApiPrivateKey = privKey
 		config.ApiPublicKey = pubKey
+	} else {
+		if config.ApiPrivateKey == [32]byte{0} || config.ApiPublicKey == [32]byte{0} {
+			return Router{tree: radix.New(), Config: &api.ConfigStruct{CORS: true}}, errors.New("API keys not initialized, turn on AutoKeys or manually set them up using crypt.GenerateKeys().") 
+		}
 	}
+	
 	var router Router
 	router.tree = radix.New()
 	router.Config = config
