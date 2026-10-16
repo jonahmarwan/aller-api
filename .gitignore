@@ -67,6 +67,5 @@ go.work.sum
 main
 start
 target/
-multi/
 
 start/crypt/libsec/Cargo.lock
