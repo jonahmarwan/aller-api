@@ -1,4 +1,4 @@
-use ed25519_dalek::SigningKey;
+    use ed25519_dalek::SigningKey;
 use rand::rngs::SysRng;
 use rand_core::UnwrapErr;
 

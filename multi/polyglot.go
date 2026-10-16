@@ -1,7 +1,7 @@
 package multi
 
 import (
-	"fmt"
+	"errors"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -13,22 +13,22 @@ type Polyglot struct {
 	PathTree *radix.Tree
 }
 
-func (p *Polyglot) ReadServices() {
+func (p *Polyglot) ReadServices() error {
 	_, err := os.Stat("../services/")
 	if err != nil {
 		if os.IsNotExist(err) {
-			fmt.Println("no exist")
-			return
+			return errors.New("Directory does not exist.")
 		}
-		fmt.Println(err)
+		return errors.New(err.Error())
 	}
 	err = filepath.WalkDir("../services", func(path string, d fs.DirEntry, err error) error {
 		p.PathTree.Insert(path, d.IsDir())
 		return nil
 	})
 	if err != nil {
-		fmt.Println(err)
+		return errors.New(err.Error())
 	}
+	return nil
 }
 
 

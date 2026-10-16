@@ -13,11 +13,11 @@ type Router struct {
 	Config *api.ConfigStruct
 }
 
-func NewRouter(config *api.ConfigStruct) Router {
+func NewRouter(config *api.ConfigStruct) (Router, error) {
 	var router Router
 	router.tree = radix.New()
 	router.Config = config
-	return router
+	return router, nil
 }
 
 func (router *Router) AddRoute(path string, handlerFunc func(w http.ResponseWriter, r *http.Request)) {

@@ -18,15 +18,27 @@ var Config = api.ConfigStruct{CORS: EnableCORS, API_PRIVATE_KEY: [32]byte{}, API
 
 func main() {
 	// Init router
-	router := route.NewRouter(&Config)
+	router, _ := route.NewRouter(&Config)
 	router.EnableCORS()
 
 	//Init API keys
-	Config.API_PRIVATE_KEY, Config.API_PUBLIC_KEY = crypt.GenerateKeys()
+	privKey, pubKey, err := crypt.GenerateKeys()
 
+	if err != nil {
+		panic(err)
+	}
+
+
+	Config = api.ConfigStruct{CORS: EnableCORS, API_PRIVATE_KEY: privKey, API_PUBLIC_KEY: pubKey}
+	
 	// Init polyglot
 	polyglot := multi.NewPolyglot()
-	polyglot.ReadServices()
+	err = polyglot.ReadServices()
+
+	if err != nil {
+		panic(err)
+	}
+
 
 	// To be replaced by polyglot comprehension service
 	polyglot.PathTree.Walk(func(s string, v interface{}) bool {
