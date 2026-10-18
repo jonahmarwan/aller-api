@@ -64,8 +64,6 @@ go.work.sum
 # .idea/
 # .vscode/
 
-main
-start
 target/
 
 start/crypt/libsec/Cargo.lock
