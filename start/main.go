@@ -31,13 +31,24 @@ func main() {
 	*/
 
 	// Init router
-	router, _ := route.NewRouter(&Config)
+	router, err := route.NewRouter(&Config)
 	router.EnableCORS()
 	
+	if err != nil {
+		panic(err)
+	}
+
+	// Init server
+
+	server, err := NewServer(&Config, &router)
+
+	if err != nil {
+		panic(err)
+	}
 
 	// Init polyglot
 	polyglot := multi.NewPolyglot()
-	err := polyglot.ReadServices()
+	err = polyglot.ReadServices()
 
 	if err != nil {
 		panic(err)
@@ -68,5 +79,5 @@ func main() {
 	router.AddRoute("/api/users", route.Usershandler)
 
 	fmt.Println(router.Config.ApiPublicKey)
-	log.Fatal(http.ListenAndServe("127.0.0.1:8080", router.Self()))
+	log.Fatal(http.ListenAndServe("127.0.0.1:8080", server.Self()))
 }
