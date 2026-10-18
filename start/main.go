@@ -1,13 +1,15 @@
 package main
 
 import (
-	api "github.com/jonahmarwan/aller-api"
-	"github.com/jonahmarwan/aller-api/multi"
-	"github.com/jonahmarwan/aller-api/route"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strings"
+
+	api "github.com/jonahmarwan/aller-api"
+	"github.com/jonahmarwan/aller-api/multi"
+	"github.com/jonahmarwan/aller-api/route"
 	// "log"
 	// "net/http"
 )
@@ -47,6 +49,8 @@ func main() {
 	}
 
 	// Init polyglot
+
+	os.Setenv("API_SERVICES", "../../services") //set environment variable for service folder
 	polyglot := multi.NewPolyglot()
 	err = polyglot.ReadServices()
 

@@ -14,14 +14,15 @@ type Polyglot struct {
 }
 
 func (p *Polyglot) ReadServices() error {
-	_, err := os.Stat("../services/")
+	path := os.Getenv("API_SERVICES")
+	_, err := os.Stat(path)
 	if err != nil {
 		if os.IsNotExist(err) {
 			return errors.New("Directory does not exist.")
 		}
 		return errors.New(err.Error())
 	}
-	err = filepath.WalkDir("../services", func(path string, d fs.DirEntry, err error) error {
+	err = filepath.WalkDir(path, func(path string, d fs.DirEntry, err error) error {
 		p.PathTree.Insert(path, d.IsDir())
 		return nil
 	})
