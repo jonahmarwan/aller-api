@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	api "github.com/jonahmarwan/aller-api"
+	serve "github.com/jonahmarwan/aller-api/server"
 	"github.com/jonahmarwan/aller-api/multi"
-	"github.com/jonahmarwan/aller-api/route"
 	// "log"
 	// "net/http"
 )
@@ -33,7 +33,7 @@ func main() {
 	*/
 
 	// Init router
-	router, err := route.NewRouter(&Config)
+	router, err := serve.NewRouter(&Config)
 	router.EnableCORS()
 	
 	if err != nil {
@@ -42,7 +42,7 @@ func main() {
 
 	// Init server
 
-	server, err := NewServer(&Config, &router)
+	server, err := serve.NewServer(&Config, &router)
 
 	if err != nil {
 		panic(err)
@@ -79,9 +79,23 @@ func main() {
 		return false // return true to stop the walk early
 	})
 	//Add router paths
-	router.AddRoute("/api/idiot", route.Idiothandler)
-	router.AddRoute("/api/users", route.Usershandler)
+	router.AddRoute("/api/idiot", Idiothandler)
+	router.AddRoute("/api/users", Usershandler)
 
 	fmt.Println(router.Config.ApiPublicKey)
 	log.Fatal(http.ListenAndServe("127.0.0.1:8080", server.Self()))
+}
+
+
+
+func Usershandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("dfdsfd"))
+}
+
+func Idiothandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("fuck u"))
 }

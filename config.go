@@ -1,4 +1,4 @@
-package api
+package aller
 
 type ConfigStruct struct {
 	CORS            bool

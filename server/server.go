@@ -1,20 +1,19 @@
-package main
+package server
 
 import (
 	"errors"
 	"net/http"
 
-	"github.com/jonahmarwan/aller-api"
+	api "github.com/jonahmarwan/aller-api"
 	"github.com/jonahmarwan/aller-api/crypt"
-	"github.com/jonahmarwan/aller-api/route"
 )
 
 type Server struct {
 	config api.ConfigStruct
-	router route.Router	
+	router Router	
 }
 
-func NewServer(cfg *api.ConfigStruct, rtr *route.Router) (Server, error){
+func NewServer(cfg *api.ConfigStruct, rtr *Router) (Server, error){
 	if cfg.AutoKeys == true {
 		pubKey, privKey, err := crypt.GenerateKeys()
 		if err != nil {
