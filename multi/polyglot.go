@@ -5,6 +5,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/armon/go-radix"
 )
@@ -33,8 +34,32 @@ func (p *Polyglot) ReadServices() error {
 }
 
 
-func NewPolyglot() Polyglot {
+func NewPolyglot() (Polyglot, error) {
 	var p Polyglot
 	p.PathTree = radix.New()
-	return p
+	return p, nil
+}
+
+func (p *Polyglot) ExecServices() error {
+	var e error = nil
+	p.PathTree.Walk(func(s string, v interface{}) bool {
+		if v == false {
+			pathElem := strings.Split(s, "\\")
+			if strings.Contains(pathElem[len(pathElem)-1], "_") {
+				meta, err := ReadMeta(s)
+				if err != nil {
+					e = err
+					return true
+				}
+				err = GenerateTOMLfromMeta(meta, s)
+				if err != nil {
+					e = err
+					return true
+				}
+
+			}
+		}
+		return false
+	})
+	return e
 }

@@ -34,30 +34,43 @@ func main() {
 
 	// Init router
 	router, err := serve.NewRouter(&Config)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	
+	
 	router.EnableCORS()
 	
-	if err != nil {
-		panic(err)
-	}
 
 	// Init server
 
 	server, err := serve.NewServer(&Config, &router)
 
 	if err != nil {
+		log.Fatal(err.Error())
 		panic(err)
 	}
 
 	// Init polyglot
 
 	os.Setenv("API_SERVICES", "../../services") //set environment variable for service folder
-	polyglot := multi.NewPolyglot()
+	polyglot, err := multi.NewPolyglot()
+	if err != nil {
+		log.Fatal(err.Error())
+		panic(err)
+	}
+	
 	err = polyglot.ReadServices()
 
 	if err != nil {
-		panic(err)
+		log.Fatal(err.Error())
 	}
 
+	err = polyglot.ExecServices()
+
+	if err != nil {
+		log.Fatal(err.Error())
+	} 
 
 	// To be replaced by polyglot comprehension service
 	polyglot.PathTree.Walk(func(s string, v interface{}) bool {
