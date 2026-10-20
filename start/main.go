@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strings"
 
 	api "github.com/jonahmarwan/aller-api"
 	serve "github.com/jonahmarwan/aller-api/server"
@@ -72,25 +71,6 @@ func main() {
 		log.Fatal(err.Error())
 	} 
 
-	// To be replaced by polyglot comprehension service
-	polyglot.PathTree.Walk(func(s string, v interface{}) bool {
-		if v == false {
-			pathElem := strings.Split(s, "\\")
-			if strings.Contains(pathElem[len(pathElem)-1], "_") {
-				meta, err := multi.ReadMeta(s)
-				if err != nil {
-					fmt.Println(err)
-					return true
-				}
-				err = multi.GenerateTOMLfromMeta(meta, s)
-				if err != nil {
-					fmt.Println(err)
-				}
-
-			}
-		}
-		return false // return true to stop the walk early
-	})
 	//Add router paths
 	router.AddRoute("/api/idiot", Idiothandler)
 	router.AddRoute("/api/users", Usershandler)

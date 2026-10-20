@@ -17,6 +17,7 @@ type Method struct {
 type Build struct {
 	Build   string `toml:"build"`
 	Version string `toml:"version"`
+	Compiler string `toml:"compiler"`
 }
 
 type Service struct {
@@ -57,6 +58,9 @@ func GenerateTOMLfromMeta(Meta []string, path string) error {
 			cfg.Service.Build.Build = lang
 			cfg.Service.Build.Version = vers
 
+		case "exec":
+			path := broken[1]
+			cfg.Service.Build.Compiler = path
 		default:
 			continue
         }
